@@ -1,3 +1,13 @@
+<?php
+	require '../database/mysql.php';
+	$section_id = $_GET['section_id'];
+	$course_id = $_GET['course_id'];
+	
+	$sql = "SELECT DISTINCT co_number from co WHERE course_id = '$course_id' AND section_id IS NULL";
+	$total_co = $mysql->query($sql)->num_rows;
+	$sql = "SELECT COUNT(plo_id) as 'total_plo' FROM plo WHERE program_id = ALL (SELECT program_id FROM course WHERE course_id = '$course_id')";
+	$total_plo = $mysql->query($sql)->fetch_row()[0];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +16,7 @@
 
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-	<title>Assessments - SPMS</title>
+	<title>Assessments Create - SPMS</title>
 
 	<link href="../css/app.css" rel="stylesheet">
 </head>
@@ -21,12 +31,11 @@
 
 				<ul class="sidebar-nav">
 					
-					<li class="sidebar-item active">
+					<li class="sidebar-item">
 						<a class="sidebar-link" href="index.html">
 						<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
 						</a>
 					</li>
-
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="sections.php">
@@ -46,7 +55,7 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item">
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="assessment-create.php">
 							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Create Assessments</span>
 						</a>
@@ -90,18 +99,48 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Blank Page</h1>
+					<h1 class="h3 mb-3">Remap PLO-CO</h1>
 
 					<div class="row">
-						<div class="col-12">
+						<div class="col-md-12">
 							<div class="card">
-								<div class="card-header">
-									<h5 class="card-title mb-0">Empty card</h5>
-								</div>
 								<div class="card-body">
+									<form method="POST" action="php/section-co-create.php">
+										<table class="table table-striped">
+											<thead>
+												<tr>
+													<th>PLO</th>
+													<?php
+														for($i=1; $i<=$total_co; $i++){
+															echo "<th>CO$i</th>";
+														}
+													?>
+												</tr>
+											</thead>
+											<tbody>
+												<?php
+													for($plo=1; $plo<=$total_plo; $plo++){
+														echo "<tr>
+																<td>PLO$plo</td>";
+														for($co=1; $co<=$total_co; $co++){
+															echo '<td><input class="form-check-input" type="checkbox" id="plo'.$plo.'co'.$co.'" value="'.$co.'" name="plo'.$plo.'[]"></td>';
+														}
+														echo "</tr>";
+													}
+												?>
+											</tbody>
+										</table>
+										<?php
+											echo "<input type='text' value='$course_id' name='course_id' hidden>";
+											echo "<input type='text' value='$section_id' name='section_id' hidden>";
+											echo "<input type='text' value='$total_plo' name='total_plo' hidden>";
+										?>
+										<button type="submit" class="btn btn-primary">Submit</button>
+									</form>
 								</div>
 							</div>
 						</div>
+
 					</div>
 
 				</div>
@@ -137,8 +176,20 @@
 		</div>
 	</div>
 
-	<script src="../js/vendor.js"></script>
 	<script src="../js/app.js"></script>
+	<script src="../js/jquery-3.6.0.min.js"></script>
+	<?php
+		$sql = "SELECT *FROM co WHERE course_id = '$course_id' AND section_id IS NULL";
+		$datas = $mysql->query($sql);
+		echo "<script>";
+		foreach($datas as $d){
+			$plo_id = $d['plo_id'];
+			$sql = "SELECT plo_number from plo WHERE plo_id = $plo_id";
+			$plo = $mysql->query($sql)->fetch_row()[0];
+			echo "$('#plo".$plo."co".$d['co_number']."').attr('checked', 'true');";
+		}
+		echo "</script>";
+	?>
 
 </body>
 

@@ -1,3 +1,12 @@
+<?php
+	require '../database/mysql.php';
+	if(!isset($_GET['section_id'])){
+		header("Location: sections.php");
+	}
+	$section_id = $_GET['section_id'];
+	$sql = "SELECT *, COUNT(assessment_type) as 'total_q' FROM assessment NATURAL LEFT JOIN section WHERE section_id = 1 GROUP BY assessment_type";
+	$datas = $mysql->query($sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +18,7 @@
 	<title>Assessments - SPMS</title>
 
 	<link href="../css/app.css" rel="stylesheet">
+	<link href="../css/jquery.dataTables.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -21,12 +31,11 @@
 
 				<ul class="sidebar-nav">
 					
-					<li class="sidebar-item active">
+					<li class="sidebar-item">
 						<a class="sidebar-link" href="index.html">
 						<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
 						</a>
 					</li>
-
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="sections.php">
@@ -40,7 +49,7 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item">
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="assessments.php">
 							<i class="align-middle" data-feather="user"></i> <span class="align-middle">Assessments</span>
 						</a>
@@ -84,21 +93,52 @@
 				<a class="sidebar-toggle d-flex">
 					<i class="hamburger align-self-center"></i>
 				</a>
-
 			</nav>
 
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Blank Page</h1>
+					<div class="row">
+						<div class="col-10">
+							<h1 class="h3 mb-3">Assessments List</h1>
+						</div>
+						<div class="col-2 text-right">
+							<?php
+								echo '<a href="assessment-create.php?section_id='.$section_id.'" class="btn btn-primary">Add</a>';
+							?>
+						</div>
+					</div>
+					
 
 					<div class="row">
-						<div class="col-12">
+						<div class="col-12 col-xl-12">
 							<div class="card">
-								<div class="card-header">
-									<h5 class="card-title mb-0">Empty card</h5>
-								</div>
 								<div class="card-body">
+									<table class="table table-striped" id="users-data">
+										<thead>
+											<tr>
+												<th>Semester</th>
+												<th>Course Id</th>
+												<th>Section</th>
+												<th>Assessment Name</th>
+												<th>Total Questions</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+												foreach($datas as $d){
+
+													echo "<tr>
+															<td>".$d['semester']."</td>
+															<td>".$d['course_id']."</td>
+															<td>".$d['section_name']."</td>
+															<td>".$d['assessment_type']."</td>
+															<td>".$d['total_q']."</td>
+														</tr>";
+												}
+											?>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
@@ -139,6 +179,12 @@
 
 	<script src="../js/vendor.js"></script>
 	<script src="../js/app.js"></script>
+	<script src="../js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready( function () {
+			$('#users-data').DataTable();
+		} );
+	</script>
 
 </body>
 

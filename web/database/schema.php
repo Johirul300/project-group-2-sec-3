@@ -115,10 +115,9 @@
         assessment_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
         assessment_type VARCHAR(20) NOT NULL , 
         question_number INT NOT NULL , 
-        co_id INT NOT NULL , 
+        co INT NOT NULL , 
         mark INT NOT NULL , 
         section_id INT NOT NULL , 
-        FOREIGN KEY (co_id) REFERENCES co (co_id),
         FOREIGN KEY (section_id) REFERENCES section (section_id)
     )";
 

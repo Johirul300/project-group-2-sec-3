@@ -1,3 +1,11 @@
+<?php
+	require '../database/mysql.php';
+	$sql = "SELECT *, COUNT(enrollment.student_id) as total_student FROM 
+			section LEFT JOIN enrollment
+			ON section.section_id = enrollment.section_id
+			GROUP BY section.section_id";
+	$datas = $mysql->query($sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +17,7 @@
 	<title>Assessments - SPMS</title>
 
 	<link href="../css/app.css" rel="stylesheet">
+	<link href="../css/jquery.dataTables.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -21,14 +30,13 @@
 
 				<ul class="sidebar-nav">
 					
-					<li class="sidebar-item active">
+					<li class="sidebar-item">
 						<a class="sidebar-link" href="index.html">
 						<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
 						</a>
 					</li>
 
-
-					<li class="sidebar-item">
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="sections.php">
 							<i class="align-middle" data-feather="grid"></i> <span class="align-middle">Sections</span>
 						</a>
@@ -84,21 +92,47 @@
 				<a class="sidebar-toggle d-flex">
 					<i class="hamburger align-self-center"></i>
 				</a>
-
 			</nav>
 
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Blank Page</h1>
+					<h1 class="h3 mb-3">Sections List</h1>
 
 					<div class="row">
-						<div class="col-12">
+						<div class="col-12 col-xl-12">
 							<div class="card">
-								<div class="card-header">
-									<h5 class="card-title mb-0">Empty card</h5>
-								</div>
 								<div class="card-body">
+									<table class="table table-striped" id="users-data">
+										<thead>
+											<tr>
+												<th>Section</th>
+												<th>Senester</th>
+												<th>Course Id</th>
+												<th>Enrolled Student</th>
+												<th class="text-center">Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+												foreach($datas as $d){
+													echo "<tr>
+															<td>".$d['section_name']."</td>
+															<td>".$d['semester']."</td>
+															<td>".$d['course_id']."</td>
+															<td>".$d['total_student']."</td>
+															<td class='table-action text-center'>
+																<a href='assessments.php?section_id=".$d['section_id']."'>
+																	<svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-edit-2 align-middle'>
+																		<path d='M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z'></path>
+																	</svg>
+																</a>
+															</td>
+														</tr>";
+												}
+											?>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
@@ -139,6 +173,12 @@
 
 	<script src="../js/vendor.js"></script>
 	<script src="../js/app.js"></script>
+	<script src="../js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready( function () {
+			$('#users-data').DataTable();
+		} );
+	</script>
 
 </body>
 

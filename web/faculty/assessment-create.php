@@ -1,3 +1,10 @@
+<?php
+	require '../database/mysql.php';
+	if(!isset($_GET['section_id'])){
+		header("Location: sections.php");
+	}
+	$section_id = $_GET['section_id'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +13,7 @@
 
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-	<title>Assessments - SPMS</title>
+	<title>Assessments Create - SPMS</title>
 
 	<link href="../css/app.css" rel="stylesheet">
 </head>
@@ -21,12 +28,11 @@
 
 				<ul class="sidebar-nav">
 					
-					<li class="sidebar-item active">
+					<li class="sidebar-item">
 						<a class="sidebar-link" href="index.html">
 						<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
 						</a>
 					</li>
-
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="sections.php">
@@ -46,7 +52,7 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item">
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="assessment-create.php">
 							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Create Assessments</span>
 						</a>
@@ -90,18 +96,39 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Blank Page</h1>
+					<h1 class="h3 mb-3">Assessment Create</h1>
 
 					<div class="row">
-						<div class="col-12">
+						<div class="col-md-12">
 							<div class="card">
-								<div class="card-header">
-									<h5 class="card-title mb-0">Empty card</h5>
-								</div>
 								<div class="card-body">
+									<form method="POST" id="assessment_form" action="php/assessment-create.php">
+										<div class="form-row">
+											<div class="form-group col-md-4">
+												<label for="section-id">Section Id</label>
+												<?php
+													echo '<input type="text" class="form-control" id="section-id" name="section_id" value="'.$section_id.'" placeholder="Section Id" readonly>';
+												?>
+												
+											</div>
+											<div class="form-group col-md-4">
+												<label for="assessment_type">Assessment Type</label>
+												<input type="text" class="form-control" id="assessment_type" name="assessment_type" placeholder="Assessment Type">
+											</div>
+											<div class="form-group col-md-4">
+												<label for="total_q">Total Question</label>
+												<input type="number" class="form-control" id="total_q" name="total_q" placeholder="Total Question">
+											</div>
+										</div>
+										<div id="q-list">
+											
+										</div>
+										<button type="button" class="btn btn-primary" id="q-btn">Generate</button>
+									</form>
 								</div>
 							</div>
 						</div>
+
 					</div>
 
 				</div>
@@ -137,8 +164,37 @@
 		</div>
 	</div>
 
-	<script src="../js/vendor.js"></script>
 	<script src="../js/app.js"></script>
+	<script src="../js/jquery-3.6.0.min.js"></script>
+
+	<script>
+		$f = 1;
+		$("#q-btn").click(function(){
+			if($f==1){
+				$total_q = $("#total_q").val();
+
+				for($i=1; $i<=$total_q; $i++){
+					$("#q-list").append(`
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="mark`+$i+`">Question `+$i+` Mark</label>
+								<input type="text" class="form-control" id="mark`+$i+`" name="mark`+$i+`" placeholder="Question `+$i+` Mark">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="co`+$i+`">Question `+$i+` CO</label>
+								<input type="text" class="form-control" id="co`+$i+`" name="co`+$i+`" placeholder="Question `+$i+` CO">
+							</div>
+						</div>
+					`);
+				}
+
+				$("#q-btn").html("Submit");
+				$f = 0;
+			}else{
+				$("#assessment_form").submit();
+			}
+		});
+	</script>
 
 </body>
 
