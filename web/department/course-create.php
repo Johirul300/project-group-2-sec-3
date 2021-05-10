@@ -1,7 +1,11 @@
 <?php
 	require '../database/mysql.php';
-	$sql = "SELECT * FROM school";
+	// $sql = "SELECT program.program_id, program.program_name, program.department_id, plo.plo_id, plo.plo_number, plo.plo_level
+	// 		FROM program NATURAL LEFT JOIN plo
+	// 		ORDER BY program.program_id, plo.plo_id";
+	$sql = "SELECT * FROM program";	
 	$datas = $mysql->query($sql);
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +15,7 @@
 
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-	<title>Schools Create - SPMS</title>
+	<title>Course Create - SPMS</title>
 
 	<link href="../css/app.css" rel="stylesheet">
 	<link href="../css/jquery.dataTables.min.css" rel="stylesheet">
@@ -75,12 +79,11 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item active">
+					<li class="sidebar-item">
 						<a class="sidebar-link" href="department-create.php">
 							<i class="align-middle" data-feather="plus-circle"></i> <span class="align-middle">Create Department</span>
 						</a>
 					</li>
-
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="programs.php">
@@ -101,9 +104,9 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item">
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="course-create.php">
-							<i class="align-middle" data-feather="file-plus"></i> <span class="align-middle">Create Courses</span>
+							<i class="align-middle" data-feather="file-plus"></i> <span class="align-middle">Create Course</span>
 						</a>
 					</li>
 
@@ -127,45 +130,73 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Department Create</h1>
-
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-								<div class="card-body">
-									<form method="POST" action="php/department-create.php">
-										<div class="form-group">
-											<label for="inputState">School name</label>
-											<select id="inputState" class="form-control" name="school_id">
-												<?php
-													foreach($datas as $d){
-														echo '<option value="'.$d["school_id"].'">'.$d["school_name"].'</option>';
-													}
-												?>
-											</select>
-										</div>
-										<div class="form-row">
-											<div class="form-group col-md-3">
-												<label for="department_id">Department ID</label>
-												<input type="text" class="form-control" id="department_id" name="department_id" placeholder="Department Id">
+					<h1 class="h3 mb-3">Course Create</h1>
+					<form method="POST" action="php/course-create.php">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-body">
+											<div class="form-group">
+												<label for="course_id">Course ID</label>
+												<input type="text" class="form-control" id="course_id" name="course_id" placeholder="Course ID">
 											</div>
-											<div class="form-group col-md-6">
-												<label for="department_name">Department Name</label>
-												<input type="text" class="form-control" id="department_name" name="department_name" placeholder="Department Name">
+											<div class="form-row">
+												<div class="form-group col-md-8">
+													<label for="course_name">Course Name</label>
+													<input type="text" class="form-control" id="course_name" name="course_name" placeholder="Course Name">
+												</div>
+												<div class="form-group col-md-4">
+													<label for="course_level">Level</label>
+													<input type="number" class="form-control" id="course_level" name="course_level" placeholder="Level">
+												</div>
 											</div>
-											<div class="form-group col-md-3">
-												<label for="head">Head</label>
-												<input type="text" class="form-control" id="head" name="head" placeholder="Head">
+											<div class="form-row">
+												<div class="form-group col-md-4">
+													<label for="inputState">Program</label>
+													<select id="inputState" class="form-control" name="program_id" id="program_id">
+														<?php
+															foreach($datas as $d){
+																echo "<option value='".$d["program_id"]."'>".$d["program_name"]." in ".$d["department_id"]."</option>";
+															}
+														?>
+													</select>
+												</div>
+												<div class="form-group col-md-4">
+													<label for="credits">Credit</label>
+													<input type="number" class="form-control" id="credits" name="credits" placeholder="Credit">
+												</div>
+												<div class="form-group col-md-4">
+													<label for="co_count">Total CO</label>
+													<input type="number" class="form-control" id="co_count" name="co_count" placeholder="Total CO">
+												</div>
+												<input type="number" id="total_plo" name="total_plo" hidden>
 											</div>
-										</div>
-										<button type="submit" class="btn btn-primary">Submit</button>
-									</form>
+											<button type="button" class="btn btn-primary" onclick="generateList();">Generate</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 mapper" hidden>
+								<div class="card">
+									<div class="card-body">
+											<table class="table">
+												<thead>
+													<tr id="table-header">
+														<th>PLO</th>
+													</tr>
+												</thead>
+												<tbody id="table-body">
+													<tr>
+													</tr>
+												</tbody>
+											</table>
+											<div>
+												<button type="submit" class="btn btn-primary submit-button">Submit</button>
+											</div>
+									</div>
 								</div>
 							</div>
 						</div>
-
-					</div>
-
+					</form>
 				</div>
 			</main>
 
@@ -200,13 +231,72 @@
 	</div>
 
 	<script src="../js/jquery-3.6.0.min.js"></script>
-	<script src="../js/vendor.js"></script>
 	<script src="../js/app.js"></script>
 	<script src="../js/jquery.dataTables.min.js"></script>
+
+<?php
+echo "<script>";
+echo '$plo_level = new Array();';
+
+$temp = 0;
+
+$sql = "SELECT program.program_id, program.program_name, program.department_id, plo.plo_id, plo.plo_number, plo.plo_level
+		FROM program NATURAL LEFT JOIN plo
+		ORDER BY program.program_id, plo.plo_id";
+$datas = $mysql->query($sql);
+
+foreach($datas as $d){
+	if($d['program_id'] != $temp){
+		echo '$plo_level['.$d["program_id"].']=new Array();';
+		$temp = $d["program_id"];
+	}
+	echo '$plo_level['.$temp.'].push('.$d["plo_level"].');';
+}
+
+echo "</script>";
+?>
+	
 	<script>
-		$(document).ready( function () {
-			$('#users-data').DataTable();
-		} );
+
+		console.log($plo_level[1].length);
+
+		function generateList(){
+			$(".mapper").removeAttr('hidden');
+			$program_id = $('select[name="program_id"] option:selected').val();
+			$("#total_plo").val($plo_level[$program_id].length);
+			for($plo=1; $plo<=$plo_level[$program_id].length; $plo++){
+				$("#table-body").append(
+					`<tr id="plo`+$plo+`-tab">
+						<td>PLO`+$plo+`</td>
+					</tr>`
+				);
+			}
+
+			$cos = $("#co_count").val();
+			for($co=1; $co<=$cos; $co++){
+				$("#table-header").append(
+					`<th style="text-align: center;">CO`+$co+`</th>`
+				);
+			}
+			
+			$course_level = $("#course_level").val();
+			console.log($course_level);
+			for($plo=1; $plo<=13; $plo++){
+				console.log($plo_level[$program_id][$plo-1]); 
+				for($co=1; $co<=$cos; $co++){
+					if($plo_level[$program_id][$plo-1] == $course_level){
+						$("#plo"+$plo+"-tab").append(
+							`<td align="center"><input class="form-check-input" type="checkbox" value="`+$co+`" name="plo`+$plo+`[]" checked></td>`
+						);
+					}else{
+						$("#plo"+$plo+"-tab").append(
+							`<td align="center"><input class="form-check-input" type="checkbox" value="`+$co+`" name="plo`+$plo+`[]"></td>`
+						);
+					}
+					
+				}
+			}
+		}
 	</script>
 
 </body>

@@ -41,13 +41,13 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="users.html">
+						<a class="sidebar-link" href="users.php">
 							<i class="align-middle" data-feather="user"></i> <span class="align-middle">Users</span>
 						</a>
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="users-create.html">
+						<a class="sidebar-link" href="user-create.php">
 							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Create User</span>
 						</a>
 					</li>

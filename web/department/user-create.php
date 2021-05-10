@@ -1,6 +1,6 @@
 <?php
 	require '../database/mysql.php';
-	$sql = "SELECT * FROM school";
+	$sql = "SELECT * FROM program ORDER BY department_id";
 	$datas = $mysql->query($sql);
 ?>
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
 
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-	<title>Schools Create - SPMS</title>
+	<title>Users Create - SPMS</title>
 
 	<link href="../css/app.css" rel="stylesheet">
 	<link href="../css/jquery.dataTables.min.css" rel="stylesheet">
@@ -51,7 +51,7 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item">
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="user-create.php">
 							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Create User</span>
 						</a>
@@ -75,12 +75,11 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item active">
+					<li class="sidebar-item">
 						<a class="sidebar-link" href="department-create.php">
 							<i class="align-middle" data-feather="plus-circle"></i> <span class="align-middle">Create Department</span>
 						</a>
 					</li>
-
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="programs.php">
@@ -127,35 +126,68 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Department Create</h1>
+					<h1 class="h3 mb-3">User Create</h1>
 
 					<div class="row">
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-body">
-									<form method="POST" action="php/department-create.php">
-										<div class="form-group">
-											<label for="inputState">School name</label>
-											<select id="inputState" class="form-control" name="school_id">
-												<?php
-													foreach($datas as $d){
-														echo '<option value="'.$d["school_id"].'">'.$d["school_name"].'</option>';
-													}
-												?>
-											</select>
+									<form method="POST" action="php/user-create.php">
+										<div class="form-row">
+											<div class="form-group col-md-4">
+												<label for="user_id">User ID</label>
+												<input type="text" class="form-control" id="user_id" name="user_id" placeholder="User ID">
+											</div>
+											<div class="form-group col-md-4">
+												<label for="first_name">First Name</label>
+												<input type="text" class="form-control" id="first_name" name="first_name" placeholder="Full Name">
+											</div>
+											<div class="form-group col-md-4">
+												<label for="last_name">Last Name</label>
+												<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Full Name">
+											</div>
 										</div>
 										<div class="form-row">
-											<div class="form-group col-md-3">
-												<label for="department_id">Department ID</label>
-												<input type="text" class="form-control" id="department_id" name="department_id" placeholder="Department Id">
+											<div class="form-group col-md-6">
+												<label for="email">Email</label>
+												<input type="email" class="form-control" id="email" name="email" placeholder="Email">
 											</div>
 											<div class="form-group col-md-6">
-												<label for="department_name">Department Name</label>
-												<input type="text" class="form-control" id="department_name" name="department_name" placeholder="Department Name">
+												<label for="password">Password</label>
+												<input type="password" class="form-control" id="password" name="password" placeholder="Password">
 											</div>
-											<div class="form-group col-md-3">
-												<label for="head">Head</label>
-												<input type="text" class="form-control" id="head" name="head" placeholder="Head">
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-4">
+												<label for="inputState">Program ID</label>
+												<select id="inputState" class="form-control" name="program_id">
+													<?php
+														foreach($datas as $d){
+															echo "<option value='".$d["program_id"]."'>".$d["program_name"]." in ".$d["department_id"]."</option>";
+														}
+													?>
+												</select>
+											</div>
+											<div class="form-group col-md-4">
+												<label for="inputState">Department ID</label>
+												<select id="inputState" class="form-control" name="department_id">
+													<?php
+														$deps = "";
+														foreach($datas as $d){
+															if($deps != $d['department_id']){
+																$deps = $d['department_id'];
+																echo "<option value='".$deps."'>".$deps."</option>";
+															}
+														}
+													?>
+												</select>
+											</div>
+											<div class="form-group col-md-4">
+												<label for="inputState">User Type</label>
+												<select id="inputState" class="form-control" name="user_type">
+													<option value="student">Student</option>
+													<option value="faculty">Faculty</option>
+												</select>
 											</div>
 										</div>
 										<button type="submit" class="btn btn-primary">Submit</button>

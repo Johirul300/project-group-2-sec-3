@@ -77,7 +77,7 @@
     $co = "CREATE TABLE co ( 
         co_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
         co_number INT NOT NULL , 
-        co_name VARCHAR(100) NOT NULL , 
+        co_name VARCHAR(100) NULL , 
         plo_id INT NOT NULL , 
         course_id VARCHAR(10) NOT NULL , 
         section_id INT NULL , 

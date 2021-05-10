@@ -1,6 +1,6 @@
 <?php
 	require '../database/mysql.php';
-	$sql = "SELECT * FROM school";
+	$sql = "SELECT * FROM department";
 	$datas = $mysql->query($sql);
 ?>
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
 
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-	<title>Schools Create - SPMS</title>
+	<title>Programs Create - SPMS</title>
 
 	<link href="../css/app.css" rel="stylesheet">
 	<link href="../css/jquery.dataTables.min.css" rel="stylesheet">
@@ -75,12 +75,11 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item active">
+					<li class="sidebar-item">
 						<a class="sidebar-link" href="department-create.php">
 							<i class="align-middle" data-feather="plus-circle"></i> <span class="align-middle">Create Department</span>
 						</a>
 					</li>
-
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="programs.php">
@@ -89,7 +88,7 @@
 					</li>
 
 
-					<li class="sidebar-item">
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="program-create.php">
 							<i class="align-middle" data-feather="folder-plus"></i> <span class="align-middle">Create Programs</span>
 						</a>
@@ -127,45 +126,60 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Department Create</h1>
+					<h1 class="h3 mb-3">Program Create</h1>
 
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-								<div class="card-body">
-									<form method="POST" action="php/department-create.php">
-										<div class="form-group">
-											<label for="inputState">School name</label>
-											<select id="inputState" class="form-control" name="school_id">
-												<?php
-													foreach($datas as $d){
-														echo '<option value="'.$d["school_id"].'">'.$d["school_name"].'</option>';
-													}
-												?>
-											</select>
-										</div>
-										<div class="form-row">
-											<div class="form-group col-md-3">
-												<label for="department_id">Department ID</label>
-												<input type="text" class="form-control" id="department_id" name="department_id" placeholder="Department Id">
+					<form method="POST" action="php/program-create.php">
+						<div class="row">
+							<div class="col-md-7">
+								<div class="card">
+									<div class="card-body">
+											<div class="form-group">
+												<label for="inputState">Department</label>
+												<select id="inputState" class="form-control" name="department_id">
+													<?php
+														foreach($datas as $d){
+															echo "<option value='".$d["department_id"]."'>".$d["department_name"]."</option>";
+														}
+													?>
+												</select>
 											</div>
-											<div class="form-group col-md-6">
-												<label for="department_name">Department Name</label>
-												<input type="text" class="form-control" id="department_name" name="department_name" placeholder="Department Name">
+											<div class="form-group">
+												<label for="program_name">Program Name</label>
+												<input type="text" class="form-control" id="program_name" name="program_name" placeholder="Program Name">
 											</div>
-											<div class="form-group col-md-3">
-												<label for="head">Head</label>
-												<input type="text" class="form-control" id="head" name="head" placeholder="Head">
+											<div class="form-group">
+												<label for="plo-count">Total PLO</label>
+												<input type="text" class="form-control" id="plo-count" name="plo_count" placeholder="Total PLO">
 											</div>
-										</div>
-										<button type="submit" class="btn btn-primary">Submit</button>
-									</form>
+											<button type="button" class="btn btn-primary" onclick="generateList();">Generate</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-5">
+								<div class="card">
+									<div class="card-body">
+											<div id="plo-list">
+												
+												<!-- <div class="row">
+													<div class="form-group col-8">
+														<label for="plo1">PLO1 Title</label>
+														<input type="text" class="form-control" id="plo1" name="plo1" placeholder="PLO1 Title">
+													</div>
+													<div class="form-group col-4">
+														<label for="map">Mapped Level</label>
+														<input type="text" class="form-control" id="map1" name="map1`" placeholder="Mapped Level">
+													</div>
+												</div> -->
+												
+											</div>										
+											<div class="text-right">
+												<button type="submit" class="btn btn-primary submit-button" disabled>Submit</button>
+											</div>
+									</div>
 								</div>
 							</div>
 						</div>
-
-					</div>
-
+					</form>
 				</div>
 			</main>
 
@@ -204,9 +218,23 @@
 	<script src="../js/app.js"></script>
 	<script src="../js/jquery.dataTables.min.js"></script>
 	<script>
-		$(document).ready( function () {
-			$('#users-data').DataTable();
-		} );
+		function generateList(){
+			for($plo=1; $plo<=$("#plo-count").val(); $plo++){
+				$("#plo-list").append(
+					`<div class="row">
+						<div class="form-group col-8">
+							<label for="plo`+$plo+`">PLO`+$plo+` Title</label>
+							<input type="text" class="form-control" id="plo`+$plo+`" name="plo`+$plo+`" placeholder="PLO`+$plo+` Title">
+						</div>
+						<div class="form-group col-4">
+							<label for="map`+$plo+`">Mapped Level</label>
+							<input type="text" class="form-control" id="map`+$plo+`" name="map`+$plo+`" placeholder="Mapped Level">
+						</div>
+					</div>`
+				);
+			}
+			$(".submit-button").removeAttr('disabled');
+		}
 	</script>
 
 </body>

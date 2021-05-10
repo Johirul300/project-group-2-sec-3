@@ -1,6 +1,6 @@
 <?php
 	require '../database/mysql.php';
-	$sql = "SELECT * FROM school";
+	$sql = "SELECT * ,COUNT(DISTINCT(plo_number)) as 'total_plo' FROM program NATURAL LEFT JOIN plo";
 	$datas = $mysql->query($sql);
 ?>
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
 
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-	<title>Schools Create - SPMS</title>
+	<title>Programs - SPMS</title>
 
 	<link href="../css/app.css" rel="stylesheet">
 	<link href="../css/jquery.dataTables.min.css" rel="stylesheet">
@@ -75,14 +75,13 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item active">
+					<li class="sidebar-item">
 						<a class="sidebar-link" href="department-create.php">
 							<i class="align-middle" data-feather="plus-circle"></i> <span class="align-middle">Create Department</span>
 						</a>
 					</li>
 
-
-					<li class="sidebar-item">
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="programs.php">
 							<i class="align-middle" data-feather="folder"></i> <span class="align-middle">Programs</span>
 						</a>
@@ -127,43 +126,37 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Department Create</h1>
+					<h1 class="h3 mb-3">Programs List</h1>
 
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-12 col-xl-12">
 							<div class="card">
 								<div class="card-body">
-									<form method="POST" action="php/department-create.php">
-										<div class="form-group">
-											<label for="inputState">School name</label>
-											<select id="inputState" class="form-control" name="school_id">
-												<?php
-													foreach($datas as $d){
-														echo '<option value="'.$d["school_id"].'">'.$d["school_name"].'</option>';
-													}
-												?>
-											</select>
-										</div>
-										<div class="form-row">
-											<div class="form-group col-md-3">
-												<label for="department_id">Department ID</label>
-												<input type="text" class="form-control" id="department_id" name="department_id" placeholder="Department Id">
-											</div>
-											<div class="form-group col-md-6">
-												<label for="department_name">Department Name</label>
-												<input type="text" class="form-control" id="department_name" name="department_name" placeholder="Department Name">
-											</div>
-											<div class="form-group col-md-3">
-												<label for="head">Head</label>
-												<input type="text" class="form-control" id="head" name="head" placeholder="Head">
-											</div>
-										</div>
-										<button type="submit" class="btn btn-primary">Submit</button>
-									</form>
+									<table class="table table-striped" id="users-data">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Program Name</th>
+												<th>Department name</th>
+												<th>Total PLO</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+												foreach($datas as $d){
+													echo "<tr>
+															<td>".$d['program_id']."</td>
+															<td>".$d['program_name']."</td>
+															<td>".$d['department_id']."</td>
+															<td>".$d['total_plo']."</td>
+														</tr>";
+												}
+											?>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
-
 					</div>
 
 				</div>
