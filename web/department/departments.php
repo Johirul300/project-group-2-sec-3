@@ -1,3 +1,8 @@
+<?php
+	require '../database/mysql.php';
+	$sql = "SELECT * FROM department";
+	$datas = $mysql->query($sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +11,10 @@
 
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-	<title>Dashboard - SPMS</title>
+	<title>Schools - SPMS</title>
 
 	<link href="../css/app.css" rel="stylesheet">
+	<link href="../css/jquery.dataTables.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -63,7 +69,7 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item">
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="departments.php">
 							<i class="align-middle" data-feather="briefcase"></i> <span class="align-middle">Departments</span>
 						</a>
@@ -120,15 +126,32 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Blank Page</h1>
+					<h1 class="h3 mb-3">Schools List</h1>
 
 					<div class="row">
-						<div class="col-12">
+						<div class="col-12 col-xl-12">
 							<div class="card">
-								<div class="card-header">
-									<h5 class="card-title mb-0">Empty card</h5>
-								</div>
 								<div class="card-body">
+									<table class="table table-striped" id="users-data">
+										<thead>
+											<tr>
+												<th>Department Id</th>
+												<th style="width:50%">Department Name</th>
+												<th>Name of Head</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+												foreach($datas as $d){
+													echo "<tr>
+															<td>".$d['department_id']."</td>
+															<td>".$d['department_name']."</td>
+															<td>".$d['head']."</td>
+														</tr>";
+												}
+											?>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
@@ -167,8 +190,15 @@
 		</div>
 	</div>
 
+	<script src="../js/jquery-3.6.0.min.js"></script>
 	<script src="../js/vendor.js"></script>
 	<script src="../js/app.js"></script>
+	<script src="../js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready( function () {
+			$('#users-data').DataTable();
+		} );
+	</script>
 
 </body>
 

@@ -1,3 +1,8 @@
+<?php
+	require '../database/mysql.php';
+	$sql = "SELECT * FROM school";
+	$datas = $mysql->query($sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +11,10 @@
 
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-	<title>Dashboard - SPMS</title>
+	<title>Schools Create - SPMS</title>
 
 	<link href="../css/app.css" rel="stylesheet">
+	<link href="../css/jquery.dataTables.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -69,11 +75,12 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item">
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="department-create.php">
 							<i class="align-middle" data-feather="plus-circle"></i> <span class="align-middle">Create Department</span>
 						</a>
 					</li>
+
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="programs.php">
@@ -120,18 +127,43 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Blank Page</h1>
+					<h1 class="h3 mb-3">Department Create</h1>
 
 					<div class="row">
-						<div class="col-12">
+						<div class="col-md-12">
 							<div class="card">
-								<div class="card-header">
-									<h5 class="card-title mb-0">Empty card</h5>
-								</div>
 								<div class="card-body">
+									<form method="POST" action="php/department-create.php">
+										<div class="form-group">
+											<label for="inputState">School name</label>
+											<select id="inputState" class="form-control" name="school_id">
+												<?php
+													foreach($datas as $d){
+														echo '<option value="'.$d["school_id"].'">'.$d["school_name"].'</option>';
+													}
+												?>
+											</select>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-3">
+												<label for="department_id">Department ID</label>
+												<input type="text" class="form-control" id="department_id" name="department_id" placeholder="Department Id">
+											</div>
+											<div class="form-group col-md-6">
+												<label for="department_name">Department Name</label>
+												<input type="text" class="form-control" id="department_name" name="department_name" placeholder="Department Name">
+											</div>
+											<div class="form-group col-md-3">
+												<label for="head">Head</label>
+												<input type="text" class="form-control" id="head" name="head" placeholder="Head">
+											</div>
+										</div>
+										<button type="submit" class="btn btn-primary">Submit</button>
+									</form>
 								</div>
 							</div>
 						</div>
+
 					</div>
 
 				</div>
@@ -167,8 +199,15 @@
 		</div>
 	</div>
 
+	<script src="../js/jquery-3.6.0.min.js"></script>
 	<script src="../js/vendor.js"></script>
 	<script src="../js/app.js"></script>
+	<script src="../js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready( function () {
+			$('#users-data').DataTable();
+		} );
+	</script>
 
 </body>
 
