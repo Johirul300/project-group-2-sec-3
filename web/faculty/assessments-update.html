@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+
+	<title>Assessments Update - SPMS</title>
+
+	<link href="../css/app.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="index.html">
+					<span class="align-middle">SPMS</span>
+				</a>
+
+				<ul class="sidebar-nav">
+					
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="index.html">
+						<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+						</a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="assessments.html">
+							<i class="align-middle" data-feather="user"></i> <span class="align-middle">Assessments</span>
+						</a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="assessments-create.html">
+							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Create Assessments</span>
+						</a>
+					</li>
+
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="assessments-update.html">
+							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Update Assessments</span>
+						</a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="qbank.html">
+							<i class="align-middle" data-feather="server"></i> <span class="align-middle">Question Bank</span>
+						</a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="qbank-create.html">
+							<i class="align-middle" data-feather="plus"></i> <span class="align-middle">Create Question Bank</span>
+						</a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="#">
+							<i class="align-middle" data-feather="log-out"></i> <span class="align-middle">LogOut</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle d-flex">
+					<i class="hamburger align-self-center"></i>
+				</a>
+
+			</nav>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3">Assessment Update</h1>
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<form>
+										<div class="form-row">
+											<div class="form-group col-md-4">
+												<label for="semester">Senester</label>
+												<input type="text" class="form-control" id="semester" placeholder="Semester">
+											</div>
+											<div class="form-group col-md-8">
+												<label for="courseId">Course ID</label>
+												<input type="text" class="form-control" id="courseId" placeholder="Course ID">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-4">
+												<label for="assessmentName">Assessment Name</label>
+												<input type="text" class="form-control" id="assessmentName" placeholder="Assessment Name">
+											</div>
+											<div class="form-group col-md-4">
+												<label for="section">Section</label>
+												<input type="text" class="form-control" id="text" placeholder="Section">
+											</div>
+											<div class="form-group col-md-4">
+												<label for="studentId">Student ID</label>
+												<input type="text" class="form-control" id="studentId" placeholder="Student ID">
+											</div>
+										</div>
+										<div id="question-list">
+											<div class="form-row">
+												<div class="form-group col-md-4">
+													<label for="marks1">Achieved Marks on Q1</label>
+													<input type="text" class="form-control" id="marks1" name="marks1" placeholder="Achieved Marks on Question 1">
+												</div>
+												<div class="form-group col-md-3">
+													<label for="assignedCo1">Assigned CO fo Q1</label>
+													<input type="text" class="form-control" id="text" id="assignedCo1" name="assignedCo1" placeholder="Assigned CO for Question 1">
+												</div>
+												<div class="form-group col-md-3">
+													<label for="total1">Total Marks on Q1</label>
+													<input type="text" class="form-control" id="total1" name="total1" placeholder="Total Marks on Question 1">
+												</div>
+												<div class="col-md-2 text-center">
+													<button type="button" class="btn btn-primary mt-4 add-btn" onclick="newQuestion();">Add</button>
+												</div>
+											</div>
+										</div>
+										<button type="submit" class="btn btn-primary">Submit</button>
+									</form>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</main>
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-left">
+							<p class="mb-0">
+								<a href="index.html" class="text-muted"><strong>AdminKit Demo</strong></a> &copy;
+							</p>
+						</div>
+						<div class="col-6 text-right">
+							<ul class="list-inline">
+								<li class="list-inline-item">
+									<a class="text-muted" href="#">Support</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="text-muted" href="#">Help Center</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="text-muted" href="#">Privacy</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="text-muted" href="#">Terms</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<script src="../js/app.js"></script>
+	<script src="../js/jquery-3.6.0.min.js"></script>
+	<script>
+		$q = 1;
+		function newQuestion(){
+			$q++;
+			$(".add-btn").attr('hidden', true);
+			$("#question-list").append(`
+											<div class="form-row">
+												<div class="form-group col-md-4">
+													<label for="marks`+$q+`">Achieved Marks on Q`+$q+`</label>
+													<input type="text" class="form-control" id="marks`+$q+`" name="marks`+$q+`" placeholder="Achieved Marks on Question `+$q+`">
+												</div>
+												<div class="form-group col-md-3">
+													<label for="assignedCo`+$q+`">Assigned CO fo Q`+$q+`</label>
+													<input type="text" class="form-control" id="text" id="assignedCo`+$q+`" name="assignedCo`+$q+`" placeholder="Assigned CO for Question `+$q+`">
+												</div>
+												<div class="form-group col-md-3">
+													<label for="total`+$q+`">Total Marks on Q`+$q+`</label>
+													<input type="text" class="form-control" id="total`+$q+`" name="total`+$q+`" placeholder="Total Marks on Question `+$q+`">
+												</div>
+												<div class="col-md-2 text-center">
+													<button type="button" class="btn btn-primary mt-4" id="add-btn" onclick="newQuestion();">Add</button>
+												</div>
+											</div>
+			`);
+		}
+	</script>
+
+</body>
+
+</html>
