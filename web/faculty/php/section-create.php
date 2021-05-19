@@ -1,7 +1,6 @@
 <?php
     require '../../database/mysql.php';
     session_start();
-    $_SESSION['user_id'] = 11111;
     $section_name = strtoupper($_POST['section_name']);
     $semester = $_POST['semester'];
     $course_id = $_POST['course_id'];

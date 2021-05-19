@@ -25,14 +25,14 @@
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar">
 			<div class="sidebar-content js-simplebar">
-				<a class="sidebar-brand" href="index.html">
+				<a class="sidebar-brand" href="index.php">
 					<span class="align-middle">SPM</span>
 				</a>
 
 				<ul class="sidebar-nav">
 					
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="index.html">
+						<a class="sidebar-link" href="index.php">
 						<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
 						</a>
 					</li>
@@ -61,11 +61,11 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item">
+					<!-- <li class="sidebar-item">
 						<a class="sidebar-link" href="assessments-update.html">
 							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Update Assessments</span>
 						</a>
-					</li>
+					</li> -->
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="qbank.html">
@@ -80,9 +80,11 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<li class="sidebar-item">
+						<a class="sidebar-link" href="../login.php?logout=1">
 							<i class="align-middle" data-feather="log-out"></i> <span class="align-middle">LogOut</span>
 						</a>
+					</li>
 					</li>
 				</ul>
 			</div>
@@ -151,7 +153,7 @@
 					<div class="row text-muted">
 						<div class="col-6 text-left">
 							<p class="mb-0">
-								<a href="index.html" class="text-muted"><strong>AdminKit Demo</strong></a> &copy;
+								<a href="index.php" class="text-muted"><strong>AdminKit Demo</strong></a> &copy;
 							</p>
 						</div>
 						<div class="col-6 text-right">

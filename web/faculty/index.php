@@ -1,6 +1,3 @@
-<?php
-	require '../database/mysql.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +6,7 @@
 
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-	<title>Assessments Create - SPMS</title>
+	<title>Assessments - SPMS</title>
 
 	<link href="../css/app.css" rel="stylesheet">
 </head>
@@ -24,11 +21,12 @@
 
 				<ul class="sidebar-nav">
 					
-					<li class="sidebar-item">
+					<li class="sidebar-item active">
 						<a class="sidebar-link" href="index.php">
 						<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
 						</a>
 					</li>
+
 
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="sections.php">
@@ -36,7 +34,7 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item active">
+					<li class="sidebar-item">
 						<a class="sidebar-link" href="section-create.php">
 							<i class="align-middle" data-feather="plus-square"></i> <span class="align-middle">Create Section</span>
 						</a>
@@ -73,11 +71,9 @@
 					</li>
 
 					<li class="sidebar-item">
-						<li class="sidebar-item">
 						<a class="sidebar-link" href="../login.php?logout=1">
 							<i class="align-middle" data-feather="log-out"></i> <span class="align-middle">LogOut</span>
 						</a>
-					</li>
 					</li>
 				</ul>
 			</div>
@@ -94,47 +90,18 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Section Create</h1>
+					<h1 class="h3 mb-3">Blank Page</h1>
 
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-12">
 							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Empty card</h5>
+								</div>
 								<div class="card-body">
-									<form method="POST" action="php/section-create.php" enctype='multipart/form-data'>
-										<div class="form-row">
-											<div class="form-group col-md-4">
-												<label for="section_name">Section Name</label>
-												<input type="text" class="form-control" id="section_name" name="section_name" placeholder="Section Name">
-											</div>
-											<div class="form-group col-md-4">
-												<label for="semester">Semester</label>
-												<input type="text" class="form-control" id="semester" name="semester" placeholder="Semester">
-											</div>
-											<div class="form-group col-md-4">
-												<label for="inputState">Course Name</label>
-												<select id="inputState" class="form-control" name="course_id">
-													<?php
-														$sql = "SELECT course_id, course_name FROM course";
-														$datas = $mysql->query($sql);
-														foreach($datas as $d){
-															echo "<option value='".$d['course_id']."'>".$d['course_name']."</option>";
-														}
-													?>
-												</select>
-											</div>
-										</div>
-										<div class="form-row">
-											<div class="form-group col-md-6">
-												<label for="students">Upload Enrolled Students List</label>
-    											<input type="file" class="form-control-file" id="students" data-allowed-file-extensions='["csv"]' name="students">
-											</div>
-										</div>
-										<button type="submit" class="btn btn-primary">Submit</button>
-									</form>
 								</div>
 							</div>
 						</div>
-
 					</div>
 
 				</div>
@@ -170,6 +137,7 @@
 		</div>
 	</div>
 
+	<script src="../js/vendor.js"></script>
 	<script src="../js/app.js"></script>
 
 </body>
