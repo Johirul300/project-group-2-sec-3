@@ -9,8 +9,6 @@
     $sql = "INSERT INTO course (course_id, course_name, course_level, credits, program_id)
             VALUES ('$course_id', '$course_name', $course_level, $credits, $program_id)";
     $mysql->query($sql);
-    echo $mysql->error;
-    echo '<br/>';
     $total_plo = $_POST['total_plo'];
     for($i=1; $i<$total_plo; $i++){
         if(isset($_POST["plo".$i])){
@@ -20,8 +18,6 @@
                 $co = $_POST["plo".$i][$j];
                 $sql = "INSERT INTO co (co_number, plo_id, course_id) VALUES($co, $plo_id, '$course_id')";
                 $mysql->query($sql);
-                echo $mysql->error;
-                echo '<br/>';
             }
             
         }

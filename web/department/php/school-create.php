@@ -1,5 +1,6 @@
 <?php
     require '../../database/mysql.php';
+    
     $university_id = strtoupper($_POST['university_id']);
     $school_name = $_POST['school_name'];
     $dean = $_POST['dean'];

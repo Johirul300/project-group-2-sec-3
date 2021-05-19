@@ -15,7 +15,7 @@
         $plo_name = $_POST["plo".$plo];
         $level = $_POST["map".$plo];
         $sql = "INSERT INTO plo (plo_number, plo_name, plo_level, program_id) 
-            VALUES ($plo, '$plo_name',  $level, $program_id)"; 
+            VALUES ($plo, '$plo_name',  '$level', $program_id)"; 
         $mysql->query($sql);
     }   
 
